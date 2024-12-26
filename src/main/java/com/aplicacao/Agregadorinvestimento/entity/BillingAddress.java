@@ -15,7 +15,7 @@ public class BillingAddress {
     // um endereco de cobranca pertence a uma conta
     // MapsId -> mapeia o id da entidade Account para a chave primaria da entidade BillingAddress (account_id)
     // JoinColumn -> especifica a coluna que sera usada para fazer a juncao entre as entidades
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "account_id")
     private Account account;
@@ -29,8 +29,9 @@ public class BillingAddress {
     public BillingAddress() {
     }
 
-    public BillingAddress(UUID id, String street, Integer number) {
+    public BillingAddress(UUID id, Account account, String street, Integer number) {
         this.id = id;
+        this.account = account;
         this.street = street;
         this.number = number;
     }

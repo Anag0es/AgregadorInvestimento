@@ -25,7 +25,7 @@ public class Account {
     // uma conta tem um endereco de cobranca
     // OneToOne -> mapeia um relacionamento um-para-um entre duas entidades
     // PrimaryKeyJoinColumn -> especifica a coluna que sera usada para fazer a juncao entre as entidades
-    @OneToOne(mappedBy = "account")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
     @PrimaryKeyJoinColumn
     private BillingAddress billingAddress;
 
@@ -36,9 +36,12 @@ public class Account {
     public Account() {
     }
 
-    public Account(UUID accountId, String description) {
+    public Account(UUID accountId, String description, User user, BillingAddress billingAddress, List<AccountStock> accountStocks) {
         this.accountId = accountId;
         this.description = description;
+        this.user = user;
+        this.billingAddress = billingAddress;
+        this.accountStocks = accountStocks;
     }
 
     public UUID getAccountId() {
