@@ -1,6 +1,6 @@
 package com.aplicacao.Agregadorinvestimento.service;
 
-import com.aplicacao.Agregadorinvestimento.dto.CreateUserDTO;
+import com.aplicacao.Agregadorinvestimento.dto.UserDTO;
 import com.aplicacao.Agregadorinvestimento.entity.User;
 import com.aplicacao.Agregadorinvestimento.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +17,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 // Padrão - triple A (Arrange, Act, Assert)
@@ -51,7 +50,7 @@ class UserServiceTest {
 
             // Arrange
 
-            var dto = new CreateUserDTO("username", "email", "password");
+            var dto = new UserDTO("username", "email", "password");
 
             var user = new User();
             user.setUsername(dto.username());
@@ -77,7 +76,7 @@ class UserServiceTest {
             doThrow(new RuntimeException("Erro ao salvar usuário")).when(repository).save(userCaptor.capture());
 
             // Act
-            var dto = new CreateUserDTO("username", "email", "password");
+            var dto = new UserDTO("username", "email", "password");
 
             // Assert
             assertThrows(RuntimeException.class, () -> service.createUser(dto));
@@ -93,7 +92,7 @@ class UserServiceTest {
         void shouldReturnUserByIdWhenOptionalIsPresent() {
 
            // Arrange
-            var dto = new CreateUserDTO("username", "email", "password");
+            var dto = new UserDTO("username", "email", "password");
             var user = new User();
             user.setUsername(dto.username());
             user.setEmail(dto.email());
@@ -115,7 +114,7 @@ class UserServiceTest {
         void shouldReturnUserByIdWhenOptionalIsEmpty() {
 
            // Arrange
-            var dto = new CreateUserDTO("username", "email", "password");
+            var dto = new UserDTO("username", "email", "password");
             var user = UUID.randomUUID();
 
             doReturn(Optional.empty()).when(repository).findById(uuidCaptor.capture());
@@ -139,7 +138,7 @@ class UserServiceTest {
         void shouldReturnListOfUsers() {
 
             // Arrange
-            var dto = new CreateUserDTO("username", "email", "password");
+            var dto = new UserDTO("username", "email", "password");
             var user = new User();
             user.setUsername(dto.username());
             user.setEmail(dto.email());
@@ -220,7 +219,7 @@ class UserServiceTest {
         void shouldUpdateUser() {
 
             // Arrange
-            var dto = new CreateUserDTO("username", "email", "password");
+            var dto = new UserDTO("username", "email", "password");
             var user = new User();
             user.setUsername(dto.username());
             user.setEmail(dto.email());
@@ -249,7 +248,7 @@ class UserServiceTest {
 
             // Act
             var userId = UUID.randomUUID();
-            var dto = new CreateUserDTO("username", "email", "password");
+            var dto = new UserDTO("username", "email", "password");
 
             // Assert
             assertThrows(RuntimeException.class, () -> service.updateUser(userId.toString(), dto));
